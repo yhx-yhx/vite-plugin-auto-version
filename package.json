@@ -1,0 +1,58 @@
+{
+  "name": "@yhx392/vite-plugin-auto-version",
+  "version": "0.0.1",
+  "description": "A vite plugin about auto generate version message",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "npm run build --watch --ignore-watch examples",
+    "build": "tsup src/index.ts --dts --format cjs,esm",
+    "lint": "eslint --fix",
+    "example:react": "cd examples/vite-react && npm run build",
+    "example:vue2": "cd examples/vite-vue2 && npm run build",
+    "example:vue3": "cd examples/vite-vue3 && npm run build"
+  },
+  "keywords": [
+    "vite",
+    "plugin",
+    "auto",
+    "version"
+  ],
+  "author": "yhx",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^17.0.35",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "import-meta-resolve": "^4.1.0",
+    "prettier": "^2.6.2",
+    "tsup": "^6.0.1",
+    "typescript": "^4.7.2",
+    "vite": "*"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "dependencies": {
+    "figlet": "^1.8.0"
+  }
+}
