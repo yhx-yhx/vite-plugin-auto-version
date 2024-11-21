@@ -1,8 +1,7 @@
 {
   "name": "@yhx392/vite-plugin-auto-version",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A vite plugin about auto generate version message",
-  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "exports": {
@@ -20,7 +19,7 @@
   ],
   "scripts": {
     "dev": "npm run build --watch --ignore-watch examples",
-    "build": "tsup src/index.ts --dts --format cjs,esm",
+    "build": "tsup src/index.ts --dts --format cjs,esm --clean",
     "lint": "eslint --fix",
     "example:react": "cd examples/vite-react && npm run build",
     "example:vue2": "cd examples/vite-vue2 && npm run build",
