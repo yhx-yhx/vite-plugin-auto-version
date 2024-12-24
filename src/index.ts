@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 import { HtmlTagDescriptor, Plugin } from 'vite';
 
@@ -6,6 +6,7 @@ interface AutoVersionPluginOptions {
   systemTitle?: string;
   customConfigs: Array<any>;
   isDisplayDefaultConfig?: boolean;
+  isGenerateVersionFile?: boolean;
 }
 
 const basedir = process.cwd();
@@ -30,6 +31,8 @@ function getCompileTime(): string {
     t.getSeconds(),
   ).padStart(2, '0')}`;
 }
+
+const CompileTime = getCompileTime();
 
 /**
  * 获取指定包的 package.json 内容
@@ -82,17 +85,36 @@ export default function autoVersionPlugin(
   options: Partial<AutoVersionPluginOptions> = {},
 ): Plugin {
   let config;
+  let configPath;
 
   return {
     name: 'vite-plugin-auto-version',
-    configResolved(resolvedConfig) {
+    async configResolved(resolvedConfig) {
       config = resolvedConfig;
+      configPath = resolvedConfig.publicDir;
+    },
+    async buildStart() {
+      console.log('buildStart');
+      const opts = { isGenerateVersionFile: true, ...options };
+      const packageJson = await getPackageJson();
+      const version = packageJson?.version;
+      if (opts.isGenerateVersionFile) {
+        const versionFilePath = path.resolve(configPath, 'version.json');
+        await writeFile(
+          versionFilePath,
+          JSON.stringify({
+            version,
+            compileTime: CompileTime,
+            timeStamp: +new Date(CompileTime),
+          }),
+        );
+      }
     },
 
     async transformIndexHtml(): Promise<HtmlTagDescriptor[]> {
       const packageJson = await getPackageJson();
       const version = packageJson?.version;
-      const compileTime = getCompileTime();
+      const compileTime = CompileTime;
       const sysTitle =
         config.env.VITE_APP_TITLE || options.systemTitle || '请配置systemTitle';
       const _customConfigs = options.customConfigs || [];

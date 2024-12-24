@@ -1,6 +1,6 @@
 {
   "name": "@yhx392/vite-plugin-auto-version",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A vite plugin about auto generate version message",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
