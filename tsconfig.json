@@ -8,10 +8,12 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "outDir": "dist",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "sourceMap": false,
     "noEmitOnError": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": [],
+    "skipLibCheck": true
   },
   "include": [
     "src/*",
